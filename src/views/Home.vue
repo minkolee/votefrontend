@@ -1,13 +1,12 @@
 <template>
-  <HelloWorld />
+  <grid></grid>
 </template>
 
 <script>
-  import HelloWorld from '../components/My.vue'
-
+  import grid from '../components/grid.vue'
   export default {
     components: {
-      HelloWorld
+      grid
     }
   }
 </script>
