@@ -1,5 +1,5 @@
 <template>
-    $END$
+    <h1>这是测试的</h1>
 </template>
 
 <script>
