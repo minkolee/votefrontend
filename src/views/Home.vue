@@ -1,12 +1,12 @@
 <template>
-  <grid></grid>
+  <vote></vote>
 </template>
 
 <script>
-  import grid from '../components/grid.vue'
+  import vote from '../components/Vote.vue'
   export default {
     components: {
-      grid
+      vote
     }
   }
 </script>
