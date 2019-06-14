@@ -1,5 +1,7 @@
 <template>
-    <div>This is about.vue</div>
+    <v-container>
+        <div>This is about.vue</div>
+    </v-container>
 </template>
 
 <script>

@@ -1,5 +1,7 @@
 <template>
-    <div>This is login form</div>
+    <v-container>
+        <div>This is login form</div>
+    </v-container>
 </template>
 
 <script>
