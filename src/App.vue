@@ -33,7 +33,7 @@
                     return "purple";
                 } else if (this.buttonValue === 'about') {
                     return "teal";
-                } else return 'green';
+                } else return 'orange';
             }
         },
         methods:{
