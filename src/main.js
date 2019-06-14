@@ -3,7 +3,9 @@ import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import Vuelidate from 'vuelidate'
 
+Vue.use(Vuelidate)
 Vue.config.productionTip = true
 
 new Vue({
@@ -16,6 +18,4 @@ new Vue({
   }
 }).$mount('#app')
 
-router.beforeEach(function (to,from,next) {
-  console.log(store.state.expire);
-})
+
