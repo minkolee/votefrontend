@@ -14,8 +14,13 @@
             <v-flex xs12 sm3 md2 class="pa-0 ma-0">
                 <v-layout justify-end>
                     <v-flex offset-xs-1>
-                        <v-checkbox v-if="voted" class="text-xs-right" :label="voteItem.name + '  '+ voteItem.score+'票'"></v-checkbox>
-                        <v-checkbox v-if="!voted" class="text-xs-right" :label="voteItem.name"></v-checkbox>
+                        <label v-if="voted">{{voteItem.name}}&nbsp;{{voteItem.score}}票
+                            <input type="checkbox" v-if="voted" v-model="votes" :value="voteItem.name" >
+
+                        </label>
+                        <label v-if="!voted">{{voteItem.name}}
+                            <input type="checkbox" v-if="!voted" v-model="votes" :value="voteItem.name" >
+                        </label>
                     </v-flex>
                 </v-layout>
             </v-flex>
@@ -30,7 +35,7 @@
             </v-flex>
         </v-layout>
         <v-layout justify-center>
-            <v-btn>投票</v-btn>
+            <v-btn color="primary" @click="comeToVote">投票</v-btn>
         </v-layout>
     </v-container>
 </template>
@@ -43,9 +48,20 @@
                 type: Object
             },
         },
+        data : function () {
+            return {
+                votes: []
+            }
+        },
         computed:{
             voted:function () {
                 return this.vote.totalVotes !== -1;
+            }
+        },
+        methods: {
+            comeToVote: function () {
+                // eslint-disable-next-line
+                console.log(this.votes)
             }
         }
     }
