@@ -1,5 +1,5 @@
 <template>
-    <vote :vote="vote"></vote>
+    <vote></vote>
 </template>
 
 <script>
@@ -27,7 +27,6 @@
                 }
             }).then(res => {
                 this.$store.commit('setVote', res.data)
-                this.vote = res.data
             }).catch(() => {
                 this.$router.push('/login')
             });
