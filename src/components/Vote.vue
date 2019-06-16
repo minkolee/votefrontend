@@ -2,7 +2,7 @@
     <v-container>
         <v-layout v-if="voted" justify-center>
             <v-flex xs12 class="text-xs-center">
-                <h2 class="display-3">投票</h2>
+                <h2 class="display-3">投票结果</h2>
             </v-flex>
         </v-layout>
         <v-layout v-if="!voted">
@@ -37,6 +37,13 @@
         <v-layout justify-center>
             <v-btn color="primary" @click="comeToVote">投票</v-btn>
         </v-layout>
+        <v-snackbar
+                v-model="errorOccured"
+                :timeout="3000"
+                top
+                auto-height
+
+        >您已经投过票</v-snackbar>
     </v-container>
 </template>
 
@@ -57,7 +64,9 @@
         },
         data: function () {
             return {
-                votenames:[]
+                votenames:[],
+                errormessage: "",
+                errorOccured: false
             }
         },
         computed:{
@@ -91,7 +100,14 @@
                     this.$emit('new-voted', res.data);
                 }).catch((err) => {
                     // eslint-disable-next-line
-                    console.log(err)
+                    if (err.response.status === 406) {
+                        this.errorOccured = true;
+                        // eslint-disable-next-line
+                        console.log(this.errorOccured)
+                    } else {
+                        this.$router.push('/login')
+                    }
+
                 });
 
 
