@@ -38,12 +38,14 @@ export default new Vuex.Store({
       const username = localStorage.getItem('username')
       const lastVote = localStorage.getItem('lastVote')
       const expire = localStorage.getItem('expire')
+      const vote = localStorage.getItem('vote')
       const now = (new Date()).getTime()
       if(now<=expire){
         context.commit('setToken', token)
         context.commit('setUsername', username)
         context.commit('setLastVote', lastVote)
         context.commit('setExpire', expire)
+        context.commit('setVote',vote)
       } else {
         context.commit('setExpire', -1);
       }

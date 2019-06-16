@@ -15,11 +15,11 @@
                 <v-layout justify-end>
                     <v-flex offset-xs-1>
                         <label v-if="voted">{{voteItem.name}}&nbsp;{{voteItem.score}}票
-                            <input type="checkbox" v-if="voted" v-model="votes" :value="voteItem.name" >
+                            <input type="checkbox" v-if="voted" v-model="votenames" :value="voteItem.name" >
 
                         </label>
                         <label v-if="!voted">{{voteItem.name}}
-                            <input type="checkbox" v-if="!voted" v-model="votes" :value="voteItem.name" >
+                            <input type="checkbox" v-if="!voted" v-model="votenames" :value="voteItem.name" >
                         </label>
                     </v-flex>
                 </v-layout>
@@ -47,13 +47,17 @@
         this.name = name
         this.score = score;
     }
-
+    // 代码重写，抛自定义事件，还是接受prop
     export default {
         name: "Vote",
-        data : function () {
+        props :{
+            vote:{
+                type: Object
+            }
+        },
+        data: function () {
             return {
-                vote: this.$store.state.vote,
-                voteNames: []
+                votenames:[]
             }
         },
         computed:{
@@ -62,11 +66,11 @@
             },
             voteSentToBackend: function () {
                 var temp = [];
-                this.voteNames.map(votename => temp.push(
+                this.votenames.map(votename => temp.push(
                     new VoteItem(votename, 0)
                 ));
 
-                var o = new Object();
+                var o = {};
                 o.votes = temp;
                 return o;
             },
@@ -74,7 +78,7 @@
         methods: {
             comeToVote: function () {
                 // eslint-disable-next-line
-                console.log("当前的votes对象是" + this.votes)
+                console.log("当前的votes对象是" + this.vote)
                 // eslint-disable-next-line
                 console.log('发送的投票对象是' + JSON.stringify(this.voteSentToBackend))
                 axios.post('http://localhost:8080/api/vote', this.voteSentToBackend, {
@@ -84,7 +88,7 @@
                 }).then(res => {
                     // eslint-disable-next-line
                     console.log(res)
-                    this.$store.commit('setVote', res.data)
+                    this.$emit('new-voted', res.data);
                 }).catch((err) => {
                     // eslint-disable-next-line
                     console.log(err)
