@@ -1,5 +1,5 @@
 <template>
-    <vote :vote="vote" @new-voted="handleVote"></vote>
+    <vote :vote="vote" :expire="vote.expireTime" @new-voted="handleVote"></vote>
 </template>
 
 <script>
@@ -12,10 +12,7 @@
         },
         data: function () {
             return {
-                vote: {
-                    votes:[],
-                    totalVotes: 0
-                },
+                vote: {},
             }
         },
 
@@ -28,7 +25,6 @@
             }).then(res => {
                 this.$store.commit('setVote', res.data)
                 this.vote = res.data
-
             }).catch(() => {
                 this.$router.push('/login')
             });
@@ -41,6 +37,8 @@
                         Authorization: token
                     }
                 }).then(res => {
+                    /* eslint-disable */
+                    // console.log(res)
                     this.$store.commit('setVote')
                     this.vote = res.data
                 }).catch(() => {

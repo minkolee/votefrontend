@@ -5,6 +5,11 @@
                 <h2 class="display-3">投票结果</h2>
             </v-flex>
         </v-layout>
+        <v-layout>
+            <v-flex xs12 class="text-xs-center">
+                <h3 class="display-2" v-if="this.expire-(new Date()).getTime()>=0">还有{{day}}天{{hr}}小时{{min}}分钟{{sec}}秒投票截止</h3>
+            </v-flex>
+        </v-layout>
         <v-layout v-if="!voted">
             <v-flex xs12 class="text-xs-center">
                 <h2 class="display-3">请先投票然后查看投票结果</h2>
@@ -60,13 +65,19 @@
         props :{
             vote:{
                 type: Object
+            },
+            expire: {
+                type: Number,
+                default: 0
             }
+
         },
         data: function () {
             return {
                 votenames:[],
                 errormessage: "",
-                errorOccured: false
+                errorOccured: false,
+                day: 0, hr: 0, min: 0, sec: 0
             }
         },
         computed:{
@@ -107,11 +118,26 @@
                     } else {
                         this.$router.push('/login')
                     }
-
                 });
-
-
             },
+            countdown: function() {
+                let mesc = this.expire-(new Date()).getTime()
+                let day = parseInt(mesc / 1000 / 60 / 60 / 24);
+                let hr = parseInt(mesc / 1000 / 60 / 60 % 24)
+                let min = parseInt(mesc / 1000 / 60 % 60)
+                let sec = parseInt(mesc / 1000 % 60)
+                this.day = day
+                this.hr = hr > 9 ? hr : '0' + hr
+                this.min = min > 9 ? min : '0' + min
+                this.sec = sec > 9 ? sec : '0' + sec
+                const that = this
+                setTimeout(function () {
+                    that.countdown()
+                }, 1000)
+            }
+        },
+        mounted() {
+            this.countdown();
         }
     }
 </script>
