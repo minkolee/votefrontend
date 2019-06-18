@@ -11,9 +11,9 @@
                 <h3 class="body-1 fixed" v-cloak v-if="this.expire-(new Date()).getTime()<0">投票已截止</h3>
             </v-flex>
         </v-layout>
-        <v-layout justify-center>
+        <v-layout v-if="vote.totalVotes !== -1" justify-center>
             <v-flex text-xs-center>
-                <v-chip>总投票人数{{vote.totalVotes}}人</v-chip>
+                <v-chip>总票数{{vote.totalVotes}}</v-chip>
             </v-flex>
         </v-layout>
 
@@ -184,7 +184,7 @@
             let _this = this;
             setInterval(function () {
                 _this.$emit('new-voted',0)
-            }, 20000);
+            }, 3000);
         }
     }
 </script>
